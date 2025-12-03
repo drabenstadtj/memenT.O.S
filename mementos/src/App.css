@@ -1,1 +1,444 @@
 /* App.css */
+
+/* Game Start Screen - Login Page */
+.game-start-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #5591d1 0%, #1e5799 100%);
+}
+
+.login-container {
+  width: 400px;
+  padding: 40px;
+  background: rgba(245, 250, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  text-align: center;
+}
+
+.login-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  border-radius: 60px;
+  border: 3px solid rgba(100, 150, 200, 0.4);
+  background: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+.login-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.login-username {
+  font-size: 24px;
+  font-weight: 400;
+  color: #1e40af;
+  margin-bottom: 30px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(147, 197, 253, 0.95) 0%,
+    rgba(59, 130, 246, 0.9) 100%
+  );
+  border: 1px solid rgba(30, 64, 175, 0.4);
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 2px 6px rgba(59, 130, 246, 0.3);
+}
+
+.login-button:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 10px rgba(59, 130, 246, 0.4);
+}
+
+.login-button:active {
+  transform: translateY(0);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.login-footer {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(100, 150, 200, 0.25);
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Day Transition Screen */
+.day-transition-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.day-transition-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 50px;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 250, 255, 0.95) 0%,
+    rgba(224, 242, 254, 0.9) 100%
+  );
+  border: 1px solid rgba(100, 150, 200, 0.4);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.day-transition-content h1 {
+  font-size: 48px;
+  font-weight: 400;
+  color: #1e40af;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.day-transition-subtitle {
+  font-size: 20px;
+  color: #475569;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.day-transition-info {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(100, 150, 200, 0.3);
+  border-radius: 4px;
+  margin-bottom: 30px;
+}
+
+.day-transition-info p {
+  font-size: 16px;
+  color: #334155;
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.day-transition-info strong {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.day-transition-warning {
+  font-size: 18px;
+  color: #dc2626;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+.continue-button {
+  padding: 12px 40px;
+  background: linear-gradient(
+    180deg,
+    rgba(147, 197, 253, 0.95) 0%,
+    rgba(59, 130, 246, 0.9) 100%
+  );
+  border: 1px solid rgba(30, 64, 175, 0.4);
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 2px 6px rgba(59, 130, 246, 0.3);
+}
+
+.continue-button:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 10px rgba(59, 130, 246, 0.4);
+}
+
+.continue-button:active {
+  transform: translateY(0);
+}
+
+/* Game End Screen */
+.game-end-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  color: #fff;
+}
+
+.end-screen-content {
+  text-align: center;
+  max-width: 700px;
+  padding: 40px;
+}
+
+.end-screen-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #ff4444;
+}
+
+.end-message {
+  font-size: 1.3rem;
+  color: #aaa;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.end-stats {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* System Messages */
+.system-messages {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.system-message {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  text-align: center;
+}
+
+.system-message p {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.system-message button {
+  padding: 0.75rem 2rem;
+  background: #4a90e2;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.system-message button:hover {
+  background: #357abd;
+}
+
+/* Game Info in Taskbar */
+.game-info {
+  display: flex;
+  gap: 1rem;
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.day-indicator {
+  font-weight: 600;
+  color: #00d4ff;
+}
+
+.time-remaining {
+  color: #ff6b6b;
+  font-weight: 500;
+}
+
+/* Badge for unread emails */
+.badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  background: #ff4444;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Download Queue Enhancements */
+.download-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.download-stats div {
+  font-weight: 500;
+}
+
+.download-speed {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.1), rgba(123, 47, 247, 0.1));
+  border-left: 3px solid #00d4ff;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.no-downloads {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+}
+
+.no-downloads p:first-child {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.download-item {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.download-item.completed {
+  background: #f0f9f4;
+  border-color: #4caf50;
+}
+
+.download-item.paused {
+  background: #fff9f0;
+  border-color: #ff9800;
+}
+
+.download-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.download-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  background: #4caf50;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-badge.paused-badge {
+  background: #ff9800;
+}
+
+.progress-bar-container {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+  transition: width 0.3s ease;
+}
+
+.download-item.completed .progress-bar {
+  background: #4caf50;
+}
+
+.download-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.download-percent {
+  font-weight: 600;
+  color: #00d4ff;
+}
+
+.pause-button {
+  padding: 0.5rem 1.5rem;
+  background: #4a90e2;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-weight: 500;
+}
+
+.pause-button:hover {
+  background: #357abd;
+}
+
+.download-item.paused .pause-button {
+  background: #4caf50;
+}
+
+.download-item.paused .pause-button:hover {
+  background: #45a049;
+}

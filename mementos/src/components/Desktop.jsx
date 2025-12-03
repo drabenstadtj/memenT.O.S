@@ -4,12 +4,25 @@ import Window from "./Window";
 import Inbox from "./Inbox";
 import Library from "./Library";
 import DownloadQueue from "./DownloadQueue";
-import { emails } from "../data/emails";
 import { libraryItems } from "../data/library";
+import { useGame } from "../context/GameContext";
 
 export default function Desktop() {
+  // Game state from context
+  const {
+    gameStarted,
+    gameEnded,
+    startGame,
+    deliveredEmails,
+    currentDownloadSpeed,
+    currentDay,
+    systemMessages,
+    dismissMessage,
+    unreadCount
+  } = useGame();
+
   const [openWindows, setOpenWindows] = useState({
-    inbox: true,
+    inbox: false,
     library: false,
     downloads: false,
     settings: false,
@@ -18,6 +31,13 @@ export default function Desktop() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
+
+  // Auto-open inbox when game starts
+  useEffect(() => {
+    if (gameStarted && !openWindows.inbox) {
+      setOpenWindows(prev => ({ ...prev, inbox: true }));
+    }
+  }, [gameStarted]);
 
   // Update time every second
   useEffect(() => {
@@ -117,8 +137,111 @@ export default function Desktop() {
     });
   };
 
+  // Track last seen day for transitions
+  const [lastSeenDay, setLastSeenDay] = useState(0);
+  const [showDayTransition, setShowDayTransition] = useState(false);
+
+  // Show day transition when day changes
+  useEffect(() => {
+    if (gameStarted && currentDay > lastSeenDay) {
+      setShowDayTransition(true);
+      setLastSeenDay(currentDay);
+    }
+  }, [currentDay, gameStarted, lastSeenDay]);
+
+  const dismissDayTransition = () => {
+    setShowDayTransition(false);
+  };
+
+  // Show start screen if game hasn't started
+  if (!gameStarted) {
+    return (
+      <div className="desktop game-start-screen">
+        <div className="login-container">
+          <div className="login-avatar">
+            {profilePicture ? (
+              <img src={profilePicture} alt="User" />
+            ) : (
+              '👤'
+            )}
+          </div>
+          <div className="login-username">Player</div>
+          <button className="login-button" onClick={startGame}>
+            Log In
+          </button>
+          <div className="login-footer">
+            November 10, 2025 • 9:00 AM
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show end screen if game has ended
+  if (gameEnded) {
+    return (
+      <div className="desktop game-end-screen">
+        <div className="end-screen-content">
+          <h1>Vault Digital has shut down.</h1>
+          <p className="end-message">Your downloads are all that remain.</p>
+          <div className="end-stats">
+            <h2>Final Statistics</h2>
+            {/* Stats will be displayed here */}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Day transition data
+  const getDayTransitionData = (day) => {
+    const shutdownDate = "November 13, 2025 at 11:59 PM";
+    const hoursLeft = 72 - ((day - 1) * 24);
+
+    switch(day) {
+      case 1:
+        return {
+          title: "Day 1: Discovery",
+          subtitle: "November 10, 2025",
+          info: [
+            `Service shutdown: ${shutdownDate}`,
+            `Time remaining: ${hoursLeft} hours`,
+            "Download speed: High (75 GB/hour)",
+            "This is your best chance to save everything."
+          ],
+          warning: null
+        };
+      case 2:
+        return {
+          title: "Day 2: Degradation",
+          subtitle: "November 11, 2025",
+          info: [
+            `Service shutdown: ${shutdownDate}`,
+            `Time remaining: ${hoursLeft} hours`,
+            "Download speed: Reduced (60 GB/hour)",
+            "Network conditions are worsening."
+          ],
+          warning: "You won't be able to save everything."
+        };
+      case 3:
+        return {
+          title: "Day 3: Final Hours",
+          subtitle: "November 12, 2025",
+          info: [
+            `Service shutdown: ${shutdownDate}`,
+            `Time remaining: ${hoursLeft} hours`,
+            "Download speed: Congested (50 GB/hour)",
+            "Choose what matters most."
+          ],
+          warning: "This is your last chance."
+        };
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div 
+    <div
       className="desktop"
       style={{
         backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
@@ -126,17 +249,67 @@ export default function Desktop() {
         backgroundPosition: 'center',
       }}
     >
+      {/* Day Transition Screen */}
+      {showDayTransition && (
+        <div className="day-transition-screen">
+          <div className="day-transition-content">
+            {(() => {
+              const data = getDayTransitionData(currentDay);
+              return data ? (
+                <>
+                  <h1>{data.title}</h1>
+                  <div className="day-transition-subtitle">{data.subtitle}</div>
+                  <div className="day-transition-info">
+                    {data.info.map((line, i) => (
+                      <p key={i}>
+                        {line.includes(':') ? (
+                          <>
+                            <strong>{line.split(':')[0]}:</strong> {line.split(':').slice(1).join(':')}
+                          </>
+                        ) : (
+                          line
+                        )}
+                      </p>
+                    ))}
+                  </div>
+                  {data.warning && (
+                    <div className="day-transition-warning">{data.warning}</div>
+                  )}
+                  <button className="continue-button" onClick={dismissDayTransition}>
+                    Continue
+                  </button>
+                </>
+              ) : null;
+            })()}
+          </div>
+        </div>
+      )}
+
+      {/* System messages overlay */}
+      {systemMessages.length > 0 && (
+        <div className="system-messages">
+          {systemMessages.map(msg => (
+            <div key={msg.id} className="system-message">
+              <p>{msg.message}</p>
+              <button onClick={() => dismissMessage(msg.id)}>OK</button>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Taskbar */}
       <div className="taskbar">
         <div className="taskbar-left">
-          <button onClick={() => toggleWindow("inbox")}>Inbox</button>
+          <button onClick={() => toggleWindow("inbox")}>
+            Inbox {unreadCount > 0 && <span className="badge">{unreadCount}</span>}
+          </button>
           <button onClick={() => toggleWindow("library")}>Library</button>
           <button onClick={() => toggleWindow("downloads")}>Downloads</button>
         </div>
 
         <div className="taskbar-right">
-          <button 
-            className="settings-button" 
+          <button
+            className="settings-button"
             title="Settings"
             onClick={() => toggleWindow("settings")}
           >
@@ -158,7 +331,7 @@ export default function Desktop() {
           defaultPosition={{ x: 50, y: 50 }}
           onClose={() => toggleWindow("inbox")}
         >
-          <Inbox emails={emails} profilePicture={profilePicture} />
+          <Inbox emails={deliveredEmails} profilePicture={profilePicture} />
         </Window>
       )}
 
@@ -186,6 +359,7 @@ export default function Desktop() {
             queue={queue}
             onPause={pauseDownload}
             onUnpause={unpauseDownload}
+            downloadSpeed={currentDownloadSpeed}
           />
         </Window>
       )}
