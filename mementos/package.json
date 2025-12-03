@@ -4,10 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite --mode development",
+    "build": "vite build --mode production",
+    "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker:build": "docker build -t mementos:latest .",
+    "docker:run": "docker run -p 80:80 mementos:latest",
+    "docker:compose:up": "docker-compose up -d",
+    "docker:compose:down": "docker-compose down",
+    "docker:compose:dev": "docker-compose -f docker-compose.dev.yml up",
+    "docker:compose:logs": "docker-compose logs -f"
   },
   "dependencies": {
     "clsx": "^2.1.1",
