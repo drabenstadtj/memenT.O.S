@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Production deployment
   mementos-app:
-    build: ./mement.o.s
+    build: ./memenT.O.S/mementos
     container_name: mementos
     ports:
       - "8090:80"
